@@ -118,3 +118,92 @@ Origen: resumen de la sesión de Claude conectada a Blender mediante el MCP de B
 - Resumen: el equipo no podía avanzar porque no había indicación de cómo pasar el diálogo. Ahora avanza con E, Enter, Espacio o clic; Tab salta el diálogo completo; se agregó una pista en pantalla. También se evitó que la misma pulsación de E que cierra un diálogo reactivara la interacción del jugador.
 - Intervención humana: el equipo probó el juego, reportó el bloqueo y confirmó que quedó bien.
 - Limitaciones: ninguna conocida.
+
+## Entrada 014 — Cámara trasera dentro del cuarto y modo de movimiento
+- Herramienta de IA: Claude
+- ACTION_TYPE: DEBUGGING
+- Archivos: `scripts/camera/camera_rig.gd`, `scripts/levels/level_base.gd`
+- Resumen: en la sala de las catacumbas la cámara trasera quedaba fuera del cuarto (5 m detrás del jugador, con la pared a 2,6 m). Ahora un rayo desde el jugador acerca la cámara si hay una pared o muro invisible en medio. Además el nivel asigna el modo de cámara directamente al jugador y escribe en consola el modo con el que arrancó, para diagnosticar el reporte de que W/S no movían al personaje.
+- Intervención humana: el equipo probó el juego y reportó la cámara fuera de la escena y que solo se movía con A y D.
+- Limitaciones: **no se ejecutó en Godot**; no se pudo reproducir el problema de W/S, queda pendiente confirmarlo en el editor.
+
+## Entrada 015 — Monja guía en el escenario 2
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `scripts/characters/monja.gd`, `scenes/characters/monja.tscn`, `scripts/levels/level_02_pasillo.gd`, `scenes/levels/02_pasillo.tscn`, `scripts/autoload/event_bus.gd`, `scripts/ui/hud.gd`, `scenes/ui/hud.tscn`, `scripts/minigames/flagellation_minigame.gd`, `data/dialogues/monja_guia.json`, `docs/ESCENARIOS.md`
+- Resumen: la monja no aparecía porque no existía en la escena. Ahora sale por la puerta tras la conversación, dice sus diálogos, y al terminar las 5 pulsaciones de E habla de nuevo, aparece el letrero «Sigue a la monja» y ella camina hacia la derecha esperando al jugador; la salida sigue siendo tocar la pared derecha. Se agregó un letrero de objetivo reutilizable en el HUD.
+- Intervención humana: el equipo describió el comportamiento deseado de la escena; el texto de los diálogos nuevos (`monja_guia.json`) lo redactó la IA y el equipo puede cambiarlo.
+- Limitaciones: **no se ejecutó en Godot**; el modelo de la monja es un placeholder y las posiciones (puerta en x=27, salida en x=36) se tomaron de los datos del nivel.
+
+## Entrada 016 — Primera aparición de la monja desde la derecha
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `scripts/levels/level_02_pasillo.gd`, `scripts/characters/monja.gd`
+- Resumen: la monja ya no sale de la puerta de las voces; en su primera aparición entra caminando desde el extremo derecho del pasillo hasta quedar junto a Malaes.
+- Intervención humana: el equipo pidió el cambio.
+- Limitaciones: no se ejecutó en Godot; el punto de entrada (x=36) es una estimación.
+
+## Entrada 017 — Cámara trasera estática en horizontal
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `scripts/camera/camera_rig.gd`
+- Resumen: en las salas de caminata vertical (cámara trasera) la cámara ya no sigue al jugador de lado: se queda fija en el centro del escenario (`behind_fixed_x`) y solo se mueve con el jugador hacia adelante y atrás, para que no muestre zonas fuera del mapa. Se puede desactivar con `lock_x_in_behind`.
+- Intervención humana: el equipo decidió este comportamiento de cámara.
+- Limitaciones: no se ejecutó en Godot; asume que cada escenario está centrado en X=0.
+
+## Entrada 018 — Carta del escenario 1: más grande y texto a pantalla completa
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `scripts/levels/level_01_cuarto.gd`, `scripts/ui/hud.gd`, `scenes/ui/hud.tscn`, `scripts/dialogue/dialogue_db.gd`, `data/dialogues/carta_papa_llama.json`, `docs/ESCENARIOS.md`
+- Resumen: la carta del suelo se agranda 3,5 veces, se desliza desde debajo de la puerta y tiene un brillo pálido para notarse. Su texto se muestra como carta (centrado, grande y sobre pantalla oscurecida) en vez de la caja de diálogo; cualquier línea de diálogo con `"style": "letter"` usa este formato.
+- Intervención humana: el equipo pidió ambos cambios.
+- Limitaciones: no se ejecutó en Godot; tamaño, brillo y tipografía son estimaciones a ajustar viendo el juego. El texto de la carta sigue siendo el de antes («El papa te llama.»).
+
+## Entrada 019 — Espera de 4 s y charco de sangre en el castigo
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `scripts/minigames/flagellation_minigame.gd`, `scripts/effects/blood_pool.gd`, `scripts/levels/level_02_pasillo.gd`, `scenes/levels/02_pasillo.tscn`
+- Resumen: entre una pulsación de E y la siguiente ahora hay una espera de 4 s (`seconds_between_presses`) con cuenta regresiva en pantalla; las pulsaciones durante la espera no cuentan. Cada golpe derrama más líquido rojo oscuro: un charco plano que se crea bajo los pies del jugador en el primer golpe, crece con cada uno y se queda fijo en el mundo.
+- Intervención humana: el equipo pidió el comportamiento.
+- Limitaciones: no se ejecutó en Godot; tamaños y aspecto del charco (disco simple) son estimaciones. Sin imagen explícita: solo el charco y el contador.
+
+## Entrada 020 — Lilith huye al terminar su diálogo (escenario 2)
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `scripts/levels/level_02_pasillo.gd`
+- Resumen: cuando termina el diálogo con Lilith, ella corre rápido hacia la izquierda (8 m/s) hasta salir de la escena y desaparece.
+- Intervención humana: el equipo pidió el comportamiento.
+- Limitaciones: no se ejecutó en Godot; Lilith sigue siendo un placeholder (cápsula) sin animación.
+
+## Entrada 021 — Cuarto invertido con luz rojiza y comentario sobre la cruz
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `scripts/levels/level_03_cuarto_invertido.gd`, `data/dialogues/cruz_invertida.json`, `docs/ESCENARIOS.md`
+- Resumen: al volver al cuarto después de seguir a la monja, las luces del cuarto y la luz ambiente se tiñen de rojo, y Malaes dice «Hmmmm... La cruz.» una sola vez, cuando termina el fundido de entrada.
+- Intervención humana: el equipo pidió ambos cambios.
+- Limitaciones: no se ejecutó en Godot; la intensidad del rojo es una estimación para ajustar viendo el juego.
+
+## Entrada 022 — Túnel más largo hacia atrás en los niveles de cámara trasera
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `scripts/levels/level_base.gd`, `scenes/levels/05_catacumbas.tscn`, `scenes/levels/07_persecucion.tscn`, `scenes/levels/09_camino_final.tscn`, `scenes/player/player.tscn`, `project.godot`, `docs/ESCENARIOS.md`
+- Resumen: al avanzar los primeros pasos la cámara trasera mostraba la pared de entrada del túnel (quedaba detrás de ella). Ahora el túnel se alarga 8 m hacia atrás repitiendo las mallas del túnel y del piso, y la pared/puerta del inicio se corre al nuevo extremo. El muro invisible que impide retroceder pasa a una capa física propia que la cámara ignora.
+- Intervención humana: el equipo reportó el problema y definió la solución (túnel más largo + muro invisible).
+- Limitaciones: no se ejecutó en Godot; el tramo nuevo es una copia del túnel original (queda oscuro, sin antorchas) y las mallas no se editaron en Blender. Si queda raro, la solución definitiva es alargar el túnel en Blender.
+
+## Entrada 023 — Carta en latín del escenario 4 como carta a pantalla completa
+- Herramienta de IA: Claude
+- ACTION_TYPE: AI_ASSISTED
+- Archivos: `data/dialogues/carta_latin_hallada.json`, `scripts/ui/hud.gd`, `scripts/dialogue/dialogue_db.gd`, `scripts/levels/level_05_catacumbas.gd`
+- Resumen: al recoger la carta en latín se muestra centrada en pantalla, con formato de carta, y luego Malaes dice «Está en latín, no entiendo nada.» y «Mejor la guardo.». El formato de carta ahora acepta `font_size` y `width` opcionales para textos largos.
+- Intervención humana: el equipo entregó el texto en latín y los diálogos de Malaes; la IA solo los puso en el juego sin cambiarlos.
+- Limitaciones: no se ejecutó en Godot; el tamaño de letra (30) y el ancho (900) son estimaciones a ajustar.
+
+## Entrada 024 — Pruebas del equipo en Godot 4.7.2 y archivos generados por el motor
+- Herramienta de IA: Claude
+- ACTION_TYPE: HUMAN_VERIFICATION
+- Archivos: ninguno modificado por la IA en esta entrada (resume lo observado por el equipo)
+- Resumen: el equipo ejecutó el juego en Godot 4.7.2 y reportó la consola. Los niveles 01, 02, 03, 04 y 05 cargaron, y en la sala 05 la consola mostró `camara=behind | jugador.mode=behind` (la línea de diagnóstico de la entrada 014), por lo que el jugador sí estaba en modo de cámara trasera. El contador de errores del editor estaba en 0. Al abrir el editor, Godot avisó que `project.godot` había cambiado fuera del editor (la capa física 5 de la entrada 022) y el equipo debía recargarlo. Godot también generó archivos `.uid` junto a los scripts nuevos; se suben al repositorio junto a ellos.
+- Intervención humana: el equipo ejecutó el juego, reportó cámara fuera de la escena, movimiento con W/S, y proporcionó la captura de la consola.
+- Limitaciones: la IA no puede ejecutar Godot; el reporte de que W/S no movía al personaje en la sala 05 sigue **sin confirmarse como resuelto**. Los cambios de las entradas 014 a 023 están pendientes de probar uno por uno en el editor.
+

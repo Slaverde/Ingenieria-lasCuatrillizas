@@ -16,6 +16,14 @@ const SUN_LIGHT_SCALE := 0.0015        # lux -> energia de Godot (luz de luna)
 const MAX_LIGHT_ENERGY := 5.0          # tope para que ninguna luz queme la imagen
 const LIGHT_RANGE := 12.0              # alcance de velas y focos (el .glb no trae alcance)
 
+## Tuneles de camara trasera: alarga el tunel hacia atras (+Z) esa cantidad de metros para que la
+## camara tenga tunel detras del jugador. Se repiten las mallas `extend_tile_nodes` (tunel y piso,
+## por nombre exacto) justo detras de si mismas, y las piezas `extend_move_prefixes` (la pared y la
+## puerta del inicio) se corren al nuevo inicio. Un muro invisible impide al jugador retroceder.
+@export var extend_back := 0.0
+@export var extend_tile_nodes: PackedStringArray = []
+@export var extend_move_prefixes: PackedStringArray = []
+
 ## Multiplicador extra para ajustar UN nivel: >1 mas luz, <1 mas oscuro.
 @export var light_energy_scale := 1.0
 ## Las sombras de muchas luces son pesadas: por defecto estan apagadas.
@@ -86,6 +94,7 @@ func _prepare_environment() -> void:
 	# Nuestra camara es CameraRig: se descartan las camaras que trae Blender.
 	for cam in env.find_children("*", "Camera3D", true, false):
 		cam.queue_free()
+	_extend_tunnel(env)
 	for node in env.find_children("*", "Node3D", true, false):
 		if _starts_with_any(node.name, hide_prefixes):
 			node.visible = false
@@ -102,6 +111,25 @@ func _prepare_environment() -> void:
 	for mesh in env.find_children("*", "MeshInstance3D", true, false):
 		if _chain_matches(mesh, env, collision_prefixes) and mesh.is_visible_in_tree():
 			mesh.create_convex_collision(true, false)
+
+
+## Alarga el tunel hacia atras (ver `extend_back`).
+func _extend_tunnel(env: Node) -> void:
+	if extend_back <= 0.0:
+		return
+	for node_name in extend_tile_nodes:
+		var src := env.find_child(node_name, true, false) as MeshInstance3D
+		if src == null:
+			push_warning("%s: no existe la malla '%s' para alargar el tunel" % [level_id, node_name])
+			continue
+		var length := (src.global_transform * src.get_aabb()).size.z
+		var copy := src.duplicate() as MeshInstance3D
+		src.get_parent().add_child(copy)
+		copy.global_transform = src.global_transform
+		copy.global_position.z += length     # pegada al inicio del tunel original, sin traslape
+	for node in env.find_children("*", "Node3D", true, false):
+		if _starts_with_any(node.name, extend_move_prefixes) and not _chain_matches(node.get_parent(), env, extend_move_prefixes):
+			node.global_position.z += extend_back
 
 
 func _starts_with_any(node_name: String, prefixes: PackedStringArray) -> bool:

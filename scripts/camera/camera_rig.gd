@@ -2,7 +2,7 @@ class_name CameraRig
 extends Node3D
 ## Camara fija con dos modos:
 ##   side   -> vista lateral, sigue al jugador solo en X.
-##   behind -> camara a la espalda del jugador (plano vertical).
+##   behind -> camara fija en X y que sigue al jugador en profundidad (caminata vertical).
 ## Se cambia con EventBus.camera_mode_requested.emit(&"side" / &"behind").
 ## offset_bias / look_bias permiten ajustar la camara en cada nivel (salas altas o profundas).
 
@@ -19,6 +19,10 @@ const PRESETS := {
 ## En modo behind la camara no puede atravesar las paredes: un rayo desde el jugador hacia la
 ## camara la acerca si choca con la fisica del mundo (capa 1: paredes, muros invisibles, altares).
 @export var avoid_walls := true
+## En modo behind la camara es estatica en horizontal (se queda en el centro del pasillo) y solo
+## sigue al jugador en profundidad (la caminata "vertical"). Asi nunca se sale de los limites.
+@export var lock_x_in_behind := true
+@export var behind_fixed_x := 0.0   # centro del escenario en X (los .glb estan centrados en 0)
 
 const WALL_MARGIN := 0.35    # separacion entre la camara y la pared
 const MIN_ARM := 1.2         # distancia minima jugador-camara
@@ -65,8 +69,11 @@ func _goal_position(preset: Dictionary) -> Vector3:
 	if _mode == &"side":
 		pos.x = clampf(pos.x, min_x, max_x)
 		pos.y = offset.y   # altura fija
-	elif avoid_walls:
-		pos = _keep_inside(pos)
+	else:
+		if lock_x_in_behind:
+			pos.x = behind_fixed_x + offset.x
+		if avoid_walls:
+			pos = _keep_inside(pos)
 	return pos
 
 
@@ -88,5 +95,7 @@ func _aim(preset: Dictionary) -> void:
 	var look: Vector3 = _target.global_position + (preset["look_offset"] as Vector3) + look_bias
 	if _mode == &"side":
 		look.x = _cam.global_position.x   # mira recto, sin girar
+	elif lock_x_in_behind:
+		look.x = behind_fixed_x + (preset["look_offset"] as Vector3).x + look_bias.x   # mira recto al fondo
 	if not _cam.global_position.is_equal_approx(look):
 		_cam.look_at(look)

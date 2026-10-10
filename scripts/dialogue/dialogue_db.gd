@@ -3,6 +3,8 @@ extends RefCounted
 ## Carga dialogos desde res://data/dialogues/<id>.json
 ## Formato: [ {"speaker": "Malaes", "text": "...", "portrait": "res://assets/ui/portraits/x.png"}, ... ]
 ## "speaker" y "portrait" son opcionales (sin speaker = pensamiento / narracion).
+## "style": "letter" muestra la linea como una carta: centrada, grande y a pantalla completa.
+## En cartas largas se pueden dar "font_size" (por defecto 52) y "width" (ancho en px, por defecto 760).
 
 static func load_lines(id: String) -> Array:
 	var path := "res://data/dialogues/%s.json" % id

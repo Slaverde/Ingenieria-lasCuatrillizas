@@ -7,7 +7,7 @@ El guion original tiene dos "Escenario 5"; aquí están renumerados en 10 nivele
 | Nivel | Guion | Modelo (.glb) | Cámara | Qué hace hoy | Pendiente |
 |---|---|---|---|---|---|
 | `01_cuarto` | Esc. 1 | `cuarto` | lateral (fija) | Carta aparece a los 5 s, se lee con E, la puerta desaparece y se puede salir | Animación de despertar y de la puerta, toques en la puerta |
-| `02_pasillo` | Esc. 2 | `pasillo` | lateral | Lilith (diálogo), conversación tras la puerta, la monja descubre a Malaes y el castigo (5 × E, sin imagen explícita) abre la salida | Monja en escena, efectos, pasillos repetidos |
+| `02_pasillo` | Esc. 2 | `pasillo` | lateral | Lilith (diálogo), conversación tras la puerta, la monja sale por la puerta y descubre a Malaes, castigo (5 × E, sin imagen explícita), letrero «Sigue a la monja» y ella lo guía hacia la derecha; al tocar la pared derecha cambia de escena | Modelo final de la monja, efectos, pasillos repetidos |
 | `03_cuarto_invertido` | Esc. 3 | `cuarto` | lateral | Mismo cuarto con la **cruz invertida** y la puerta abierta | Animación de despertar |
 | `04_pasillo_noche2` | Esc. 3 (pasillo) | `pasillo` | lateral | Puertas abiertas; la del fondo lleva a las catacumbas | — |
 | `05_catacumbas` | Esc. 4 | `catacumbas` | **a la espalda** | Libros (guardar la carta), altar (rezar) y puerta de los 3 santos con 3 estados: examinar → sacar la carta → bajar | Temblor/oscuridad al rezar |
@@ -39,3 +39,13 @@ El guion original tiene dos "Escenario 5"; aquí están renumerados en 10 nivele
 ## Cómo agregar un diálogo
 Crear `data/dialogues/<id>.json` y ponerle `dialogue_id = "<id>"` a un `Interactable`, o llamar
 `EventBus.dialogue_requested.emit(DialogueDB.load_lines("<id>"))`.
+
+## Letrero de objetivo y monja guía
+- `EventBus.objective_changed.emit("texto")` muestra un letrero fijo arriba en pantalla (`""` lo oculta). Se borra solo al cambiar de nivel.
+- La monja es `scenes/characters/monja.tscn` (placeholder; el modelo final va en `ModelPivot`). `Monja.appear(desde, hasta)` la hace salir por una puerta y `Monja.lead_to(x)` la hace caminar hacia la derecha esperando al jugador si se queda atrás.
+- Diálogos de la monja: `monja_descubre.json` (regaño) y `monja_guia.json` (después del castigo).
+- Cámara trasera (`behind`): un rayo desde el jugador acerca la cámara si hay una pared en medio (`avoid_walls` en `CameraRig`).
+- Cartas: una línea de diálogo con `"style": "letter"` (ver `carta_papa_llama.json`) se muestra centrada, grande y a pantalla completa, en vez de la caja de abajo. Sirve también para las demás cartas y notas.
+- Cuarto invertido (`03`): luz rojiza (constantes `RED_LIGHT`, `RED_AMBIENT`, `TINT_AMOUNT` en `level_03_cuarto_invertido.gd`) y diálogo `cruz_invertida.json`, una sola vez (flag `comento_cruz`).
+- Túneles de cámara trasera (05, 07, 09): `extend_back` alarga el túnel 8 m hacia atrás repitiendo la malla del túnel y del piso (`extend_tile_nodes`) y moviendo la pared/puerta del inicio (`extend_move_prefixes`). El jugador no puede retroceder: lo frena un muro invisible en la **capa física 5** («bloqueo_jugador»), que la cámara ignora para poder ver el túnel detrás del jugador.
+

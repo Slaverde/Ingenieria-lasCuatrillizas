@@ -1,8 +1,16 @@
 [
   {
-    "text": "Una carta llena de texto en latín. No logro entender lo que dice."
+    "style": "letter",
+    "font_size": 30,
+    "width": 900,
+    "text": "Ex faucibus abyssi prodit noctis progenies.\nMalaes velum discerpit, et Reficul solium suum repetit.\nCaeli cineribus obducti, ante filium sulphuris genua flectite;\nfinis temporum in tenebris genitus est.\nVeni, O Electe Chaos, hereditatem sanguinis tuam vindica.\nCoronam Destructionis super tempora tua impone\net lucem huius mundi putridi devora.\nAbyssus tua est. Fiat voluntas tua."
   },
   {
-    "text": "Guardo la carta."
+    "speaker": "Malaes",
+    "text": "Está en latín, no entiendo nada."
+  },
+  {
+    "speaker": "Malaes",
+    "text": "Mejor la guardo."
   }
 ]

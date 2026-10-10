@@ -2,14 +2,18 @@ extends CanvasLayer
 ## HUD global (autoload): prompt de interaccion [E] y caja de dialogos estilo Pokemon.
 ## Avanzar: [E] / [Enter] / [Espacio] / clic. El primero completa el texto, el siguiente pasa a la linea.
 ## [Tab] salta todo el dialogo.
+## Una linea con "style": "letter" (ej. la carta) se muestra a pantalla completa, centrada y en grande.
 
 const CHARS_PER_SEC := 45.0
 
 @onready var _prompt: Label = %PromptLabel
+@onready var _objective: Label = %ObjectiveLabel
 @onready var _panel: PanelContainer = %DialoguePanel
 @onready var _speaker: Label = %SpeakerLabel
 @onready var _text: Label = %TextLabel
 @onready var _portrait: TextureRect = %PortraitRect
+@onready var _letter_layer: Control = %LetterLayer
+@onready var _letter_text: Label = %LetterText
 
 var _prompt_text := ""
 var _lines: Array = []
@@ -17,16 +21,25 @@ var _index := 0
 var _active := false
 var _accepting := false
 var _tween: Tween
+var _label: Label   # el texto que se esta escribiendo (dialogo o carta)
 
 
 func _ready() -> void:
 	EventBus.prompt_changed.connect(_on_prompt_changed)
 	EventBus.dialogue_requested.connect(_start_dialogue)
+	EventBus.objective_changed.connect(_on_objective_changed)
+	EventBus.level_started.connect(func(_id: StringName) -> void: _on_objective_changed(""))
 
 
 func _on_prompt_changed(text: String) -> void:
 	_prompt_text = text
 	_refresh_prompt()
+
+
+## Letrero fijo de objetivo (ej. "Sigue a la monja"): no depende de lo que el jugador tenga cerca.
+func _on_objective_changed(text: String) -> void:
+	_objective.text = text
+	_objective.visible = text != ""
 
 
 func _refresh_prompt() -> void:
@@ -42,7 +55,6 @@ func _start_dialogue(lines: Array) -> void:
 	_active = true
 	_accepting = false
 	GameState.lock_input(&"dialogue")
-	_panel.show()
 	_refresh_prompt()
 	_show_line()
 	await get_tree().process_frame   # evita que el mismo [E] avance la primera linea
@@ -54,25 +66,40 @@ func _show_line() -> void:
 	var speaker := ""
 	var text := ""
 	var portrait := ""
+	var style := "dialogue"
+	var font_size := 52        # solo para cartas: "font_size" y "width" son opcionales en el JSON
+	var width := 760.0
 	if line is Dictionary:
 		speaker = line.get("speaker", "")
 		text = line.get("text", "")
 		portrait = line.get("portrait", "")
+		style = line.get("style", "dialogue")
+		font_size = int(line.get("font_size", 52))
+		width = float(line.get("width", 760.0))
 	else:
 		text = str(line)
+	var is_letter := style == "letter"
+	_panel.visible = not is_letter
+	_letter_layer.visible = is_letter
+	_label = _letter_text if is_letter else _text
+	if is_letter:
+		_letter_text.add_theme_font_size_override("font_size", font_size)
+		_letter_text.custom_minimum_size.x = width
 	_speaker.text = speaker
 	_speaker.visible = speaker != ""
-	_text.text = text
-	_text.visible_ratio = 0.0
-	if portrait != "" and ResourceLoader.exists(portrait):
+	_label.text = text
+	_label.visible_ratio = 0.0
+	if not is_letter and portrait != "" and ResourceLoader.exists(portrait):
 		_portrait.texture = load(portrait)
 		_portrait.show()
 	else:
 		_portrait.hide()
 	if _tween:
 		_tween.kill()
+	var speed := CHARS_PER_SEC * (0.6 if is_letter else 1.0)   # la carta se "lee" mas despacio
 	_tween = create_tween()
-	_tween.tween_property(_text, "visible_ratio", 1.0, maxf(text.length() / CHARS_PER_SEC, 0.05))
+	var duration := clampf(text.length() / speed, 0.05, 6.0 if is_letter else 30.0)   # cartas largas no tardan mas de 6 s
+	_tween.tween_property(_label, "visible_ratio", 1.0, duration)
 
 
 func _input(event: InputEvent) -> void:
@@ -96,10 +123,10 @@ func _is_advance(event: InputEvent) -> bool:
 
 
 func _advance() -> void:
-	if _text.visible_ratio < 1.0:
+	if _label.visible_ratio < 1.0:
 		if _tween:
 			_tween.kill()
-		_text.visible_ratio = 1.0
+		_label.visible_ratio = 1.0
 		return
 	_index += 1
 	if _index >= _lines.size():
@@ -115,6 +142,7 @@ func _end_dialogue() -> void:
 	if _tween:
 		_tween.kill()
 	_panel.hide()
+	_letter_layer.hide()
 	_portrait.hide()
 	# Se espera 2 frames de fisica: asi el mismo [E] que cierra el dialogo no reactiva
 	# la interaccion del jugador (el jugador lee el input en _physics_process).

@@ -1,5 +1,6 @@
 extends LevelBase
 ## Escenario 4: libros (carta en latin), altar para rezar y la puerta de los 3 santos.
+## Al recoger la carta se muestra como carta (texto en latin) y Malaes comenta que no la entiende y la guarda.
 ## La puerta tiene 3 estados: examinar -> sacar la carta (ya legible) -> bajar las escaleras.
 ## TODO: temblor de pantalla y oscuridad al rezar, animacion de la puerta.
 

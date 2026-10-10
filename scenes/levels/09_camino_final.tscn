@@ -35,6 +35,9 @@ height = 2.6
 script = ExtResource("lvl")
 level_id = &"09_camino_final"
 camera_mode = "behind"
+extend_back = 8.0
+extend_tile_nodes = PackedStringArray("Persecucion_Tunel", "Persecucion_Piso")
+extend_move_prefixes = PackedStringArray("Persecucion_Muro_Inicio")
 hide_prefixes = PackedStringArray("Estanteria_", "Estatua_", "Escombros_", "Pilar_Roto", "LibroSuelo")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -65,8 +68,8 @@ script = ExtResource("wall")
 shape = SubResource("s3")
 
 [node name="Back" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2.25)
-script = ExtResource("wall")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.3)
+collision_layer = 16
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Back"]
 shape = SubResource("s4")

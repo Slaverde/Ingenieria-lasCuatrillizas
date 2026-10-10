@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/monja.gd" id="1_monja"]
+
+[sub_resource type="StandardMaterial3D" id="mat_habit"]
+albedo_color = Color(0.1, 0.1, 0.12, 1)
+emission_enabled = true
+emission = Color(0.07, 0.07, 0.09, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_skin"]
+albedo_color = Color(0.85, 0.8, 0.74, 1)
+emission_enabled = true
+emission = Color(0.12, 0.11, 0.1, 1)
+
+[sub_resource type="CapsuleMesh" id="mesh_body"]
+radius = 0.3
+height = 1.6
+
+[sub_resource type="SphereMesh" id="mesh_head"]
+radius = 0.15
+height = 0.3
+
+[sub_resource type="CylinderMesh" id="mesh_collar"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.08
+
+[node name="Monja" type="Node3D"]
+script = ExtResource("1_monja")
+
+[node name="ModelPivot" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="ModelPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+material_override = SubResource("mat_habit")
+mesh = SubResource("mesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="ModelPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72, 0)
+material_override = SubResource("mat_skin")
+mesh = SubResource("mesh_head")
+
+[node name="Collar" type="MeshInstance3D" parent="ModelPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56, 0)
+material_override = SubResource("mat_skin")
+mesh = SubResource("mesh_collar")

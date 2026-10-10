@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/level_02_pasillo.gd" id="lvl"]
 [ext_resource type="PackedScene" path="res://assets/environments/pasillo/pasillo.glb" id="env"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://scripts/minigames/flagellation_minigame.gd" id="whip"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
 [ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
+[ext_resource type="PackedScene" path="res://scenes/characters/monja.tscn" id="monja"]
+[ext_resource type="Script" path="res://scripts/effects/blood_pool.gd" id="blood"]
 
 [sub_resource type="Environment" id="s1"]
 background_mode = 1
@@ -115,6 +117,11 @@ shape = SubResource("s6")
 
 [node name="Castigo" type="Node" parent="."]
 script = ExtResource("whip")
+
+[node name="Sangre" type="Node3D" parent="."]
+script = ExtResource("blood")
+
+[node name="Monja" parent="." instance=ExtResource("monja")]
 
 [node name="Player" parent="." instance=ExtResource("player")]
 

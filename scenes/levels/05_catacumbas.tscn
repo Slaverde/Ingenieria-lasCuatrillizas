@@ -30,6 +30,9 @@ size = Vector3(1.2, 1.5, 1.2)
 script = ExtResource("lvl")
 level_id = &"05_catacumbas"
 camera_mode = "behind"
+extend_back = 8.0
+extend_tile_nodes = PackedStringArray("Tunel_Roca", "Piso_Baldosas")
+extend_move_prefixes = PackedStringArray("Entrada_")
 collision_prefixes = PackedStringArray("Altar_Bloque", "Altar_Cruz", "Altar_Mesa")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -60,8 +63,8 @@ script = ExtResource("wall")
 shape = SubResource("s3")
 
 [node name="Back" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 1.65)
-script = ExtResource("wall")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.3)
+collision_layer = 16
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Back"]
 shape = SubResource("s4")
