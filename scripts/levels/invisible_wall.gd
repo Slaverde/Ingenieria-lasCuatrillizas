@@ -11,5 +11,5 @@ func _ready() -> void:
 
 
 func _apply() -> void:
-	var open := unlock_flag != &"" and GameState.get_flag(unlock_flag)
+	var open: bool = unlock_flag != &"" and GameState.get_flag(unlock_flag)
 	set_deferred("collision_layer", 0 if open else 1)
