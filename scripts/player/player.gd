@@ -11,12 +11,14 @@ extends CharacterBody3D
 @export var can_jump := false    # se activa en la persecucion
 @export var acceleration := 20.0
 @export var turn_speed := 12.0
+@export var allow_backwards := true   # en el camino final no se puede retroceder
 
 var mode: StringName = &"side"
 
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var _nearby: Array[Interactable] = []
 var _current: Interactable
+var _shown_prompt := ""
 
 @onready var _pivot: Node3D = $ModelPivot
 @onready var _sensor: Area3D = $InteractionSensor
@@ -52,6 +54,8 @@ func _read_direction() -> Vector3:
 	var x := Input.get_axis(&"move_left", &"move_right")
 	if mode == &"behind":
 		var z := Input.get_axis(&"move_forward", &"move_back")   # adelante = -Z
+		if not allow_backwards:
+			z = minf(z, 0.0)
 		return Vector3(x, 0.0, z).normalized()
 	return Vector3(x, 0.0, 0.0)
 
@@ -72,9 +76,11 @@ func _update_interaction() -> void:
 			if d < best_d:
 				best_d = d
 				best = item
-	if best != _current:
-		_current = best
-		EventBus.prompt_changed.emit(("[E] " + best.prompt_text) if best else "")
+	_current = best
+	var wanted := ("[E] " + best.prompt_text) if best else ""
+	if wanted != _shown_prompt:
+		_shown_prompt = wanted
+		EventBus.prompt_changed.emit(wanted)
 	if _current and not GameState.is_input_locked() and Input.is_action_just_pressed(&"interact"):
 		_current.interact(self)
 

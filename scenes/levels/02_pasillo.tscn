@@ -1,112 +1,95 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=15 format=3]
 
-[ext_resource type="Script" path="res://scripts/levels/level_base.gd" id="lvl"]
+[ext_resource type="Script" path="res://scripts/levels/level_02_pasillo.gd" id="lvl"]
+[ext_resource type="PackedScene" path="res://assets/environments/pasillo/pasillo.glb" id="env"]
+[ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
+[ext_resource type="Script" path="res://scripts/levels/scene_exit.gd" id="exit"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="inter"]
+[ext_resource type="Script" path="res://scripts/minigames/flagellation_minigame.gd" id="whip"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
 [ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
-[ext_resource type="Script" path="res://scripts/levels/scene_exit.gd" id="exit"]
-[ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
-[ext_resource type="Script" path="res://scripts/interaction/door.gd" id="door"]
-[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="inter"]
 
-[sub_resource type="Environment" id="env"]
+[sub_resource type="Environment" id="s1"]
 background_mode = 1
 background_color = Color(0.02, 0.02, 0.03, 1)
 ambient_light_source = 2
 ambient_light_color = Color(0.15, 0.14, 0.16, 1)
-ambient_light_energy = 0.6
+ambient_light_energy = 0.25
 
-[sub_resource type="BoxShape3D" id="floor_shape"]
-size = Vector3(30, 0.2, 4)
+[sub_resource type="BoxShape3D" id="s2"]
+size = Vector3(37.0, 0.2, 4)
 
-[sub_resource type="BoxMesh" id="floor_mesh"]
-size = Vector3(30, 0.2, 4)
-
-[sub_resource type="BoxShape3D" id="wall_shape"]
+[sub_resource type="BoxShape3D" id="s3"]
 size = Vector3(0.5, 6, 4)
 
-[sub_resource type="BoxShape3D" id="wall_side_shape"]
-size = Vector3(0.5, 6, 30)
-
-[sub_resource type="BoxShape3D" id="exit_shape"]
+[sub_resource type="BoxShape3D" id="s4"]
 size = Vector3(1, 3, 4)
 
-[sub_resource type="BoxShape3D" id="item_shape"]
-size = Vector3(1.2, 1.5, 1.2)
-
-[sub_resource type="BoxMesh" id="item_mesh"]
-size = Vector3(0.4, 0.05, 0.3)
-
-[sub_resource type="CapsuleMesh" id="npc_mesh"]
+[sub_resource type="CapsuleMesh" id="s5"]
 radius = 0.25
 height = 0.9
+
+[sub_resource type="BoxShape3D" id="s6"]
+size = Vector3(1.2, 1.5, 1.2)
 
 [node name="Level" type="Node3D"]
 script = ExtResource("lvl")
 level_id = &"02_pasillo"
 camera_mode = "side"
+hide_prefixes = PackedStringArray("Puerta_Cuarto")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("env")
+environment = SubResource("s1")
 
-[node name="Floor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+[node name="Environment" parent="." instance=ExtResource("env")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-shape = SubResource("floor_shape")
+[node name="SafetyFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0, -0.1, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("floor_mesh")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SafetyFloor"]
+shape = SubResource("s2")
 
 [node name="Walls" type="Node3D" parent="."]
 
 [node name="Left" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 3, 0)
 script = ExtResource("wall")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Left"]
-shape = SubResource("wall_shape")
+shape = SubResource("s3")
 
 [node name="Right" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.4, 3, 0)
 script = ExtResource("wall")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Right"]
-shape = SubResource("wall_shape")
+shape = SubResource("s3")
 
 [node name="Spawns" type="Node3D" parent="."]
 
 [node name="Default" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.05, 0)
-
-[node name="FromRight" type="Marker3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.05, 0)
-
-[node name="Candle" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 2.2, 1.5)
-light_color = Color(1, 0.7, 0.4, 1)
-light_energy = 2.0
-omni_range = 8.0
-
-[node name="ExitForward" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.5, 0)
-script = ExtResource("exit")
-target_level = &"03_cuarto_invertido"
-required_flag = &"castigo_completado"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitForward"]
-shape = SubResource("exit_shape")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0.05, 0)
 
 [node name="ExitBack" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 1.5, 0)
 script = ExtResource("exit")
 target_level = &"01_cuarto"
 target_spawn = &"FromRight"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitBack"]
-shape = SubResource("exit_shape")
+shape = SubResource("s4")
+
+[node name="ExitForward" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.7, 1.5, 0)
+script = ExtResource("exit")
+target_level = &"03_cuarto_invertido"
+required_flag = &"castigo_completado"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitForward"]
+shape = SubResource("s4")
 
 [node name="Lilith" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9, 0.5, -0.5)
 script = ExtResource("inter")
 prompt_text = "Hablar"
 one_shot = true
@@ -114,11 +97,29 @@ dialogue_id = "lilith_pasillo"
 set_flag_on_interact = &"vio_a_lilith"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Lilith"]
-shape = SubResource("item_shape")
+shape = SubResource("s6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Lilith"]
-mesh = SubResource("npc_mesh")
+mesh = SubResource("s5")
+
+[node name="EscucharPuerta" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.0, 1.0, -0.9)
+script = ExtResource("inter")
+prompt_text = "Escuchar conversación"
+one_shot = true
+dialogue_id = "conversacion_puerta"
+set_flag_on_interact = &"escucho_conversacion"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EscucharPuerta"]
+shape = SubResource("s6")
+
+[node name="Castigo" type="Node" parent="."]
+script = ExtResource("whip")
 
 [node name="Player" parent="." instance=ExtResource("player")]
 
 [node name="CameraRig" parent="." instance=ExtResource("rig")]
+min_x = 8.0
+max_x = 28.5
+offset_bias = Vector3(0, 1.5, 3)
+look_bias = Vector3(0, 1.5, 0)

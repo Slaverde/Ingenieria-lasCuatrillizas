@@ -1,6 +1,7 @@
 extends CanvasLayer
 ## HUD global (autoload): prompt de interaccion [E] y caja de dialogos estilo Pokemon.
-## Avanzar dialogo = [E]. El primer [E] completa el texto, el segundo pasa a la siguiente linea.
+## Avanzar: [E] / [Enter] / [Espacio] / clic. El primero completa el texto, el siguiente pasa a la linea.
+## [Tab] salta todo el dialogo.
 
 const CHARS_PER_SEC := 45.0
 
@@ -74,10 +75,27 @@ func _show_line() -> void:
 	_tween.tween_property(_text, "visible_ratio", 1.0, maxf(text.length() / CHARS_PER_SEC, 0.05))
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not _active or not _accepting or not event.is_action_pressed(&"interact"):
+func _input(event: InputEvent) -> void:
+	if not _active or not _accepting:
 		return
-	get_viewport().set_input_as_handled()
+	# [Tab] salta todo el dialogo
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_TAB:
+		get_viewport().set_input_as_handled()
+		_end_dialogue()
+		return
+	if _is_advance(event):
+		get_viewport().set_input_as_handled()
+		_advance()
+
+
+## Avanzan el dialogo: [E], [Enter], [Espacio] o clic izquierdo.
+func _is_advance(event: InputEvent) -> bool:
+	if event.is_action_pressed(&"interact") or event.is_action_pressed(&"ui_accept"):
+		return true
+	return event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT
+
+
+func _advance() -> void:
 	if _text.visible_ratio < 1.0:
 		if _tween:
 			_tween.kill()
@@ -91,10 +109,18 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _end_dialogue() -> void:
-	_active = false
+	if not _active:
+		return
 	_accepting = false
+	if _tween:
+		_tween.kill()
 	_panel.hide()
 	_portrait.hide()
+	# Se espera 2 frames de fisica: asi el mismo [E] que cierra el dialogo no reactiva
+	# la interaccion del jugador (el jugador lee el input en _physics_process).
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	_active = false
 	GameState.unlock_input(&"dialogue")
 	_refresh_prompt()
 	EventBus.dialogue_finished.emit()
