@@ -1,0 +1,17 @@
+# Godot 4
+.godot/
+.import/
+*.translation
+export_presets.cfg
+/build/
+/exports/
+
+# Blender
+*.blend1
+*.blend2
+
+# SO / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

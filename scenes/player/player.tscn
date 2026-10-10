@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+
+[sub_resource type="CapsuleShape3D" id="shape_body"]
+radius = 0.3
+height = 1.0
+
+[sub_resource type="CapsuleMesh" id="mesh_placeholder"]
+radius = 0.3
+height = 1.0
+
+[sub_resource type="SphereShape3D" id="shape_sensor"]
+radius = 1.2
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("shape_body")
+
+[node name="ModelPivot" type="Node3D" parent="."]
+
+[node name="PlaceholderMesh" type="MeshInstance3D" parent="ModelPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("mesh_placeholder")
+
+[node name="InteractionSensor" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionSensor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("shape_sensor")

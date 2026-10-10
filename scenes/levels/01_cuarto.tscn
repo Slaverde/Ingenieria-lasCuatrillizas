@@ -1,0 +1,117 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/level_01_cuarto.gd" id="lvl"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
+[ext_resource type="Script" path="res://scripts/levels/scene_exit.gd" id="exit"]
+[ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
+[ext_resource type="Script" path="res://scripts/interaction/door.gd" id="door"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="inter"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.14, 0.16, 1)
+ambient_light_energy = 0.6
+
+[sub_resource type="BoxShape3D" id="floor_shape"]
+size = Vector3(30, 0.2, 4)
+
+[sub_resource type="BoxMesh" id="floor_mesh"]
+size = Vector3(30, 0.2, 4)
+
+[sub_resource type="BoxShape3D" id="wall_shape"]
+size = Vector3(0.5, 6, 4)
+
+[sub_resource type="BoxShape3D" id="wall_side_shape"]
+size = Vector3(0.5, 6, 30)
+
+[sub_resource type="BoxShape3D" id="exit_shape"]
+size = Vector3(1, 3, 4)
+
+[sub_resource type="BoxShape3D" id="item_shape"]
+size = Vector3(1.2, 1.5, 1.2)
+
+[sub_resource type="BoxMesh" id="item_mesh"]
+size = Vector3(0.4, 0.05, 0.3)
+
+[sub_resource type="CapsuleMesh" id="npc_mesh"]
+radius = 0.25
+height = 0.9
+
+[node name="Level" type="Node3D"]
+script = ExtResource("lvl")
+level_id = &"01_cuarto"
+camera_mode = "side"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("floor_shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("floor_mesh")
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Left" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3, 0)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Left"]
+shape = SubResource("wall_shape")
+
+[node name="Right" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3, 0)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Right"]
+shape = SubResource("wall_shape")
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Default" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.05, 0)
+
+[node name="FromRight" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.05, 0)
+
+[node name="Candle" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 2.2, 1.5)
+light_color = Color(1, 0.7, 0.4, 1)
+light_energy = 2.0
+omni_range = 8.0
+
+[node name="ExitForward" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.5, 0)
+script = ExtResource("exit")
+target_level = &"02_pasillo"
+required_flag = &"carta_papa_leida"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitForward"]
+shape = SubResource("exit_shape")
+
+[node name="Letter" type="Area3D" parent="."]
+visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.4, 0.8)
+script = ExtResource("inter")
+prompt_text = "Leer carta"
+enabled = false
+one_shot = true
+dialogue_id = "carta_papa_llama"
+set_flag_on_interact = &"carta_papa_leida"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Letter"]
+shape = SubResource("item_shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Letter"]
+mesh = SubResource("item_mesh")
+
+[node name="Player" parent="." instance=ExtResource("player")]
+
+[node name="CameraRig" parent="." instance=ExtResource("rig")]

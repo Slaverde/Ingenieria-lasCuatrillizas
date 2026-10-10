@@ -1,0 +1,112 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/level_base.gd" id="lvl"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
+[ext_resource type="Script" path="res://scripts/levels/scene_exit.gd" id="exit"]
+[ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
+[ext_resource type="Script" path="res://scripts/interaction/door.gd" id="door"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="inter"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.14, 0.16, 1)
+ambient_light_energy = 0.6
+
+[sub_resource type="BoxShape3D" id="floor_shape"]
+size = Vector3(4, 0.2, 30)
+
+[sub_resource type="BoxMesh" id="floor_mesh"]
+size = Vector3(4, 0.2, 30)
+
+[sub_resource type="BoxShape3D" id="wall_shape"]
+size = Vector3(4, 6, 0.5)
+
+[sub_resource type="BoxShape3D" id="wall_side_shape"]
+size = Vector3(0.5, 6, 30)
+
+[sub_resource type="BoxShape3D" id="exit_shape"]
+size = Vector3(4, 3, 1)
+
+[sub_resource type="BoxShape3D" id="item_shape"]
+size = Vector3(1.2, 1.5, 1.2)
+
+[sub_resource type="BoxMesh" id="item_mesh"]
+size = Vector3(0.4, 0.05, 0.3)
+
+[sub_resource type="CapsuleMesh" id="npc_mesh"]
+radius = 0.25
+height = 0.9
+
+[node name="Level" type="Node3D"]
+script = ExtResource("lvl")
+level_id = &"09_camino_final"
+camera_mode = "behind"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("floor_shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("floor_mesh")
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Left" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -6)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Left"]
+shape = SubResource("wall_side_shape")
+
+[node name="Right" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -6)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Right"]
+shape = SubResource("wall_side_shape")
+
+[node name="Back" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 9)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Back"]
+shape = SubResource("wall_shape")
+
+[node name="Front" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -21)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Front"]
+shape = SubResource("wall_shape")
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Default" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 7)
+
+[node name="Candle" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 5)
+light_color = Color(1, 0.7, 0.4, 1)
+light_energy = 2.0
+omni_range = 8.0
+
+[node name="DoorForward" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, -18)
+script = ExtResource("door")
+prompt_text = "Abrir puerta"
+target_level = &"10_sala_papa"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorForward"]
+shape = SubResource("item_shape")
+
+[node name="Player" parent="." instance=ExtResource("player")]
+
+[node name="CameraRig" parent="." instance=ExtResource("rig")]
