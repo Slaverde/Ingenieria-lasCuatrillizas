@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b5ll31ccxtc5o"
 path.s3tc="res://.godot/imported/catacumbas_castle_wall_slates_nor_gl_2k.jpg-67f41bca2c8f0074ab642cb694a6aa85.s3tc.ctex"
+path.etc2="res://.godot/imported/catacumbas_castle_wall_slates_nor_gl_2k.jpg-67f41bca2c8f0074ab642cb694a6aa85.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/catacumbas/catacumbas_castle_wall_slates_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/catacumbas_castle_wall_slates_nor_gl_2k.jpg-67f41bca2c8f0074ab642cb694a6aa85.s3tc.ctex"]
+dest_files=["res://.godot/imported/catacumbas_castle_wall_slates_nor_gl_2k.jpg-67f41bca2c8f0074ab642cb694a6aa85.s3tc.ctex", "res://.godot/imported/catacumbas_castle_wall_slates_nor_gl_2k.jpg-67f41bca2c8f0074ab642cb694a6aa85.etc2.ctex"]
 
 [params]
 

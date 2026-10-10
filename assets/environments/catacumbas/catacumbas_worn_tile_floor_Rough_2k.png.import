@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cqrwae7em0gc2"
 path.s3tc="res://.godot/imported/catacumbas_worn_tile_floor_Rough_2k.png-6db00d11af8d03057314b7f48356498a.s3tc.ctex"
+path.etc2="res://.godot/imported/catacumbas_worn_tile_floor_Rough_2k.png-6db00d11af8d03057314b7f48356498a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/catacumbas/catacumbas_worn_tile_floor_Rough_2k.png"
-dest_files=["res://.godot/imported/catacumbas_worn_tile_floor_Rough_2k.png-6db00d11af8d03057314b7f48356498a.s3tc.ctex"]
+dest_files=["res://.godot/imported/catacumbas_worn_tile_floor_Rough_2k.png-6db00d11af8d03057314b7f48356498a.s3tc.ctex", "res://.godot/imported/catacumbas_worn_tile_floor_Rough_2k.png-6db00d11af8d03057314b7f48356498a.etc2.ctex"]
 
 [params]
 

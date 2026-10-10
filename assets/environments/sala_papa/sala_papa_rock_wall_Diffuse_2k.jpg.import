@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2m052uqv1ibp"
 path.s3tc="res://.godot/imported/sala_papa_rock_wall_Diffuse_2k.jpg-59edc7ef1620e0af1a533d0d19117364.s3tc.ctex"
+path.etc2="res://.godot/imported/sala_papa_rock_wall_Diffuse_2k.jpg-59edc7ef1620e0af1a533d0d19117364.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/sala_papa/sala_papa_rock_wall_Diffuse_2k.jpg"
-dest_files=["res://.godot/imported/sala_papa_rock_wall_Diffuse_2k.jpg-59edc7ef1620e0af1a533d0d19117364.s3tc.ctex"]
+dest_files=["res://.godot/imported/sala_papa_rock_wall_Diffuse_2k.jpg-59edc7ef1620e0af1a533d0d19117364.s3tc.ctex", "res://.godot/imported/sala_papa_rock_wall_Diffuse_2k.jpg-59edc7ef1620e0af1a533d0d19117364.etc2.ctex"]
 
 [params]
 

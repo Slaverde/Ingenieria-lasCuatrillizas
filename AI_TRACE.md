@@ -294,3 +294,19 @@ Origen: resumen de la sesión de Claude conectada a Blender mediante el MCP de B
 - Resumen: mientras Malaes camina junto a Lilith hacia la puerta del Papa (nivel 09), Lilith dice cuatro líneas que avanzan solas, 4.5 s cada una y sin que el jugador las pase, empezando 2 s después de entrar al nivel. Para que el jugador pueda seguir caminando mientras ella habla, el HUD acepta una opción nueva, `"free_walk": true` en la primera línea del diálogo, que no bloquea el movimiento; si se cambia de nivel mientras habla, el diálogo se corta. Se corrigieron dos erratas del texto dictado: "Maleas" por "Malaes" y "el el heredero" por "el heredero".
 - Intervención humana: el equipo dictó los textos y pidió que corrieran solos, con un tiempo prudente.
 - Limitaciones: no se ejecutó en Godot. Los 4.5 s por línea y los 2 s de espera son estimaciones; con la velocidad de caminata (2.5 m/s) los cuatro diálogos terminan hacia los 20 s, antes de llegar a la puerta (a unos 25 s).
+
+## Entrada 036 — El Papa se prende en llamas y pantalla final
+- Herramienta de IA: Claude
+- ACTION_TYPE: CODE_GENERATION
+- Archivos: `scripts/effects/fire_effect.gd` (nuevo), `scripts/levels/level_10_sala_papa.gd`, `data/dialogues/papa_final.json`, `data/dialogues/papa_llamas.json` (nuevo)
+- Resumen: en la sala del Papa, después de "Sí, padre.", el Papa se prende en llamas (partículas naranjas/rojas y una luz que parpadea, hechas por código) y dice "AGHHHHHH... ¡ALABADO SEA SAMAEL!" durante 5 s (línea automática). Luego una pantalla negra cubre todo el juego con "AHORA TÚ ERES EL HEREDERO," y después "AHORA TÚ ERES... EL PAPA". Se quitó el diálogo anterior "AHORA ERES EL PAPA".
+- Intervención humana: el equipo definió el momento, el texto y la duración.
+- Limitaciones: no se ejecutó en Godot. El aspecto del fuego (tamaño, cantidad de partículas, colores) es una primera versión sin ver en pantalla y puede necesitar ajuste. El Papa no tiene animación propia: se prende pero se queda quieto. La pantalla final no tiene créditos ni vuelve al menú.
+
+## Entrada 037 - Ajuste del ícono del juego
+- Herramienta de IA: Gemini
+- ACTION_TYPE: IMAGE_CREATION
+- Archivos: resultado usado en el ícono del juego, se encuentra dentro de la capeta (nuevo)
+- Resumen: Utilizando IA se lleva a cabo compartiendo la idea general del juego, una imagen de referencia que vamos a utilizar de ícono del .exe 
+- Intervención humana: el equipo describió y dirigió la generación de imáganes asistida
+- Limitaciones: No se termina de adaptar del todo a la idea que posiblemente se espere de la palabra elegida "papa caliente"

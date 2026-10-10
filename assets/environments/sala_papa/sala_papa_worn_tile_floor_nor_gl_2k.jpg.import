@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c0n5ej500j0lu"
 path.s3tc="res://.godot/imported/sala_papa_worn_tile_floor_nor_gl_2k.jpg-e3814f17cbe7a243bffa4cc55d8088e6.s3tc.ctex"
+path.etc2="res://.godot/imported/sala_papa_worn_tile_floor_nor_gl_2k.jpg-e3814f17cbe7a243bffa4cc55d8088e6.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/sala_papa/sala_papa_worn_tile_floor_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/sala_papa_worn_tile_floor_nor_gl_2k.jpg-e3814f17cbe7a243bffa4cc55d8088e6.s3tc.ctex"]
+dest_files=["res://.godot/imported/sala_papa_worn_tile_floor_nor_gl_2k.jpg-e3814f17cbe7a243bffa4cc55d8088e6.s3tc.ctex", "res://.godot/imported/sala_papa_worn_tile_floor_nor_gl_2k.jpg-e3814f17cbe7a243bffa4cc55d8088e6.etc2.ctex"]
 
 [params]
 

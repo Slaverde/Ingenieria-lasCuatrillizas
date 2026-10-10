@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bknuhkb57ppww"
 path.s3tc="res://.godot/imported/capilla_E6_Cuadro_Malaes.png-f588d730c0fece136242c20a493852a1.s3tc.ctex"
+path.etc2="res://.godot/imported/capilla_E6_Cuadro_Malaes.png-f588d730c0fece136242c20a493852a1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/capilla/capilla_E6_Cuadro_Malaes.png"
-dest_files=["res://.godot/imported/capilla_E6_Cuadro_Malaes.png-f588d730c0fece136242c20a493852a1.s3tc.ctex"]
+dest_files=["res://.godot/imported/capilla_E6_Cuadro_Malaes.png-f588d730c0fece136242c20a493852a1.s3tc.ctex", "res://.godot/imported/capilla_E6_Cuadro_Malaes.png-f588d730c0fece136242c20a493852a1.etc2.ctex"]
 
 [params]
 

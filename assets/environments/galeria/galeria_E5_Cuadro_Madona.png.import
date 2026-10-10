@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d1i07x8u4swrl"
 path.s3tc="res://.godot/imported/galeria_E5_Cuadro_Madona.png-89f27cbdda2aa48eeb93e4f1054b818c.s3tc.ctex"
+path.etc2="res://.godot/imported/galeria_E5_Cuadro_Madona.png-89f27cbdda2aa48eeb93e4f1054b818c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/galeria/galeria_E5_Cuadro_Madona.png"
-dest_files=["res://.godot/imported/galeria_E5_Cuadro_Madona.png-89f27cbdda2aa48eeb93e4f1054b818c.s3tc.ctex"]
+dest_files=["res://.godot/imported/galeria_E5_Cuadro_Madona.png-89f27cbdda2aa48eeb93e4f1054b818c.s3tc.ctex", "res://.godot/imported/galeria_E5_Cuadro_Madona.png-89f27cbdda2aa48eeb93e4f1054b818c.etc2.ctex"]
 
 [params]
 

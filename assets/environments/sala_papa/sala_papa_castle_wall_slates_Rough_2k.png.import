@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://fri8f8b8hgmn"
 path.s3tc="res://.godot/imported/sala_papa_castle_wall_slates_Rough_2k.png-69b969ccf53c1004584b1e9c78b39d79.s3tc.ctex"
+path.etc2="res://.godot/imported/sala_papa_castle_wall_slates_Rough_2k.png-69b969ccf53c1004584b1e9c78b39d79.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/sala_papa/sala_papa_castle_wall_slates_Rough_2k.png"
-dest_files=["res://.godot/imported/sala_papa_castle_wall_slates_Rough_2k.png-69b969ccf53c1004584b1e9c78b39d79.s3tc.ctex"]
+dest_files=["res://.godot/imported/sala_papa_castle_wall_slates_Rough_2k.png-69b969ccf53c1004584b1e9c78b39d79.s3tc.ctex", "res://.godot/imported/sala_papa_castle_wall_slates_Rough_2k.png-69b969ccf53c1004584b1e9c78b39d79.etc2.ctex"]
 
 [params]
 

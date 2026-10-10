@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cx33i2ns3amvy"
 path.s3tc="res://.godot/imported/pasillo_stone_tiles_02_nor_gl_2k.jpg-124de91629bdd28928623b296e55514a.s3tc.ctex"
+path.etc2="res://.godot/imported/pasillo_stone_tiles_02_nor_gl_2k.jpg-124de91629bdd28928623b296e55514a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/pasillo/pasillo_stone_tiles_02_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/pasillo_stone_tiles_02_nor_gl_2k.jpg-124de91629bdd28928623b296e55514a.s3tc.ctex"]
+dest_files=["res://.godot/imported/pasillo_stone_tiles_02_nor_gl_2k.jpg-124de91629bdd28928623b296e55514a.s3tc.ctex", "res://.godot/imported/pasillo_stone_tiles_02_nor_gl_2k.jpg-124de91629bdd28928623b296e55514a.etc2.ctex"]
 
 [params]
 

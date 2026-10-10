@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dcxq215bwx6on"
 path.s3tc="res://.godot/imported/cuarto_wood_planks_nor_gl_1k.jpg-6d1f19a43a486718447db05bf98bd120.s3tc.ctex"
+path.etc2="res://.godot/imported/cuarto_wood_planks_nor_gl_1k.jpg-6d1f19a43a486718447db05bf98bd120.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/cuarto/cuarto_wood_planks_nor_gl_1k.jpg"
-dest_files=["res://.godot/imported/cuarto_wood_planks_nor_gl_1k.jpg-6d1f19a43a486718447db05bf98bd120.s3tc.ctex"]
+dest_files=["res://.godot/imported/cuarto_wood_planks_nor_gl_1k.jpg-6d1f19a43a486718447db05bf98bd120.s3tc.ctex", "res://.godot/imported/cuarto_wood_planks_nor_gl_1k.jpg-6d1f19a43a486718447db05bf98bd120.etc2.ctex"]
 
 [params]
 

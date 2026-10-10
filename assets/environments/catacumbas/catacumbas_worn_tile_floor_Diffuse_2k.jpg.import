@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b21whrds1b1oo"
 path.s3tc="res://.godot/imported/catacumbas_worn_tile_floor_Diffuse_2k.jpg-4cb2e91fc20a906c426a48aa87e94086.s3tc.ctex"
+path.etc2="res://.godot/imported/catacumbas_worn_tile_floor_Diffuse_2k.jpg-4cb2e91fc20a906c426a48aa87e94086.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/catacumbas/catacumbas_worn_tile_floor_Diffuse_2k.jpg"
-dest_files=["res://.godot/imported/catacumbas_worn_tile_floor_Diffuse_2k.jpg-4cb2e91fc20a906c426a48aa87e94086.s3tc.ctex"]
+dest_files=["res://.godot/imported/catacumbas_worn_tile_floor_Diffuse_2k.jpg-4cb2e91fc20a906c426a48aa87e94086.s3tc.ctex", "res://.godot/imported/catacumbas_worn_tile_floor_Diffuse_2k.jpg-4cb2e91fc20a906c426a48aa87e94086.etc2.ctex"]
 
 [params]
 

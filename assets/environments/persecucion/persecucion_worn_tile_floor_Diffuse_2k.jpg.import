@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dg70ww84buuuo"
 path.s3tc="res://.godot/imported/persecucion_worn_tile_floor_Diffuse_2k.jpg-564ed4288685cc9f741875668954cad3.s3tc.ctex"
+path.etc2="res://.godot/imported/persecucion_worn_tile_floor_Diffuse_2k.jpg-564ed4288685cc9f741875668954cad3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/persecucion/persecucion_worn_tile_floor_Diffuse_2k.jpg"
-dest_files=["res://.godot/imported/persecucion_worn_tile_floor_Diffuse_2k.jpg-564ed4288685cc9f741875668954cad3.s3tc.ctex"]
+dest_files=["res://.godot/imported/persecucion_worn_tile_floor_Diffuse_2k.jpg-564ed4288685cc9f741875668954cad3.s3tc.ctex", "res://.godot/imported/persecucion_worn_tile_floor_Diffuse_2k.jpg-564ed4288685cc9f741875668954cad3.etc2.ctex"]
 
 [params]
 

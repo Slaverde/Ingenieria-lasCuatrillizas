@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cgj660a6nlifk"
 path.s3tc="res://.godot/imported/cuarto_castle_wall_slates_nor_gl_2k.jpg-0b202ee9233f498db5b3ac4a8f4022bb.s3tc.ctex"
+path.etc2="res://.godot/imported/cuarto_castle_wall_slates_nor_gl_2k.jpg-0b202ee9233f498db5b3ac4a8f4022bb.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/cuarto/cuarto_castle_wall_slates_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/cuarto_castle_wall_slates_nor_gl_2k.jpg-0b202ee9233f498db5b3ac4a8f4022bb.s3tc.ctex"]
+dest_files=["res://.godot/imported/cuarto_castle_wall_slates_nor_gl_2k.jpg-0b202ee9233f498db5b3ac4a8f4022bb.s3tc.ctex", "res://.godot/imported/cuarto_castle_wall_slates_nor_gl_2k.jpg-0b202ee9233f498db5b3ac4a8f4022bb.etc2.ctex"]
 
 [params]
 

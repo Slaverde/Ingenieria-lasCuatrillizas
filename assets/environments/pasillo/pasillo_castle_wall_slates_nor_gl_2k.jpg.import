@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://i1j051g8u4nr"
 path.s3tc="res://.godot/imported/pasillo_castle_wall_slates_nor_gl_2k.jpg-fd896d9a2020d20144fa226e7db2aa2b.s3tc.ctex"
+path.etc2="res://.godot/imported/pasillo_castle_wall_slates_nor_gl_2k.jpg-fd896d9a2020d20144fa226e7db2aa2b.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/pasillo/pasillo_castle_wall_slates_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/pasillo_castle_wall_slates_nor_gl_2k.jpg-fd896d9a2020d20144fa226e7db2aa2b.s3tc.ctex"]
+dest_files=["res://.godot/imported/pasillo_castle_wall_slates_nor_gl_2k.jpg-fd896d9a2020d20144fa226e7db2aa2b.s3tc.ctex", "res://.godot/imported/pasillo_castle_wall_slates_nor_gl_2k.jpg-fd896d9a2020d20144fa226e7db2aa2b.etc2.ctex"]
 
 [params]
 

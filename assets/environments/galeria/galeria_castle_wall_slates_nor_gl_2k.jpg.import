@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bdymnjdckfq2h"
 path.s3tc="res://.godot/imported/galeria_castle_wall_slates_nor_gl_2k.jpg-238c4817f7508c1c1582a35073deab3c.s3tc.ctex"
+path.etc2="res://.godot/imported/galeria_castle_wall_slates_nor_gl_2k.jpg-238c4817f7508c1c1582a35073deab3c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/galeria/galeria_castle_wall_slates_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/galeria_castle_wall_slates_nor_gl_2k.jpg-238c4817f7508c1c1582a35073deab3c.s3tc.ctex"]
+dest_files=["res://.godot/imported/galeria_castle_wall_slates_nor_gl_2k.jpg-238c4817f7508c1c1582a35073deab3c.s3tc.ctex", "res://.godot/imported/galeria_castle_wall_slates_nor_gl_2k.jpg-238c4817f7508c1c1582a35073deab3c.etc2.ctex"]
 
 [params]
 

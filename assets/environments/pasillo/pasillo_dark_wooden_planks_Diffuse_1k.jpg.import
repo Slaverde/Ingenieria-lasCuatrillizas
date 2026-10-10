@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bt20r078lmb8a"
 path.s3tc="res://.godot/imported/pasillo_dark_wooden_planks_Diffuse_1k.jpg-85b223b2f3a9f1a112f605961abb5043.s3tc.ctex"
+path.etc2="res://.godot/imported/pasillo_dark_wooden_planks_Diffuse_1k.jpg-85b223b2f3a9f1a112f605961abb5043.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/pasillo/pasillo_dark_wooden_planks_Diffuse_1k.jpg"
-dest_files=["res://.godot/imported/pasillo_dark_wooden_planks_Diffuse_1k.jpg-85b223b2f3a9f1a112f605961abb5043.s3tc.ctex"]
+dest_files=["res://.godot/imported/pasillo_dark_wooden_planks_Diffuse_1k.jpg-85b223b2f3a9f1a112f605961abb5043.s3tc.ctex", "res://.godot/imported/pasillo_dark_wooden_planks_Diffuse_1k.jpg-85b223b2f3a9f1a112f605961abb5043.etc2.ctex"]
 
 [params]
 

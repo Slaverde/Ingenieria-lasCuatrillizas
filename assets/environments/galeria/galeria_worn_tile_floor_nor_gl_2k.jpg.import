@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://kayx8yusrk6e"
 path.s3tc="res://.godot/imported/galeria_worn_tile_floor_nor_gl_2k.jpg-6801893d4764977d1f829d7769a9cf80.s3tc.ctex"
+path.etc2="res://.godot/imported/galeria_worn_tile_floor_nor_gl_2k.jpg-6801893d4764977d1f829d7769a9cf80.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/galeria/galeria_worn_tile_floor_nor_gl_2k.jpg"
-dest_files=["res://.godot/imported/galeria_worn_tile_floor_nor_gl_2k.jpg-6801893d4764977d1f829d7769a9cf80.s3tc.ctex"]
+dest_files=["res://.godot/imported/galeria_worn_tile_floor_nor_gl_2k.jpg-6801893d4764977d1f829d7769a9cf80.s3tc.ctex", "res://.godot/imported/galeria_worn_tile_floor_nor_gl_2k.jpg-6801893d4764977d1f829d7769a9cf80.etc2.ctex"]
 
 [params]
 

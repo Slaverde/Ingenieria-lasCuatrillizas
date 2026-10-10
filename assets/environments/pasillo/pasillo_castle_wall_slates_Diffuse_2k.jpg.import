@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bmshbs61tp8w6"
 path.s3tc="res://.godot/imported/pasillo_castle_wall_slates_Diffuse_2k.jpg-b7f28cca84a80c73b0cf98066ff0417f.s3tc.ctex"
+path.etc2="res://.godot/imported/pasillo_castle_wall_slates_Diffuse_2k.jpg-b7f28cca84a80c73b0cf98066ff0417f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/pasillo/pasillo_castle_wall_slates_Diffuse_2k.jpg"
-dest_files=["res://.godot/imported/pasillo_castle_wall_slates_Diffuse_2k.jpg-b7f28cca84a80c73b0cf98066ff0417f.s3tc.ctex"]
+dest_files=["res://.godot/imported/pasillo_castle_wall_slates_Diffuse_2k.jpg-b7f28cca84a80c73b0cf98066ff0417f.s3tc.ctex", "res://.godot/imported/pasillo_castle_wall_slates_Diffuse_2k.jpg-b7f28cca84a80c73b0cf98066ff0417f.etc2.ctex"]
 
 [params]
 

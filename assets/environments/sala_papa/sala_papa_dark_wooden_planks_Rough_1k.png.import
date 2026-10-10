@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cega1upa82ic0"
 path.s3tc="res://.godot/imported/sala_papa_dark_wooden_planks_Rough_1k.png-b12e9b1b1f1e4f7666ee2e0343e6aef5.s3tc.ctex"
+path.etc2="res://.godot/imported/sala_papa_dark_wooden_planks_Rough_1k.png-b12e9b1b1f1e4f7666ee2e0343e6aef5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environments/sala_papa/sala_papa_dark_wooden_planks_Rough_1k.png"
-dest_files=["res://.godot/imported/sala_papa_dark_wooden_planks_Rough_1k.png-b12e9b1b1f1e4f7666ee2e0343e6aef5.s3tc.ctex"]
+dest_files=["res://.godot/imported/sala_papa_dark_wooden_planks_Rough_1k.png-b12e9b1b1f1e4f7666ee2e0343e6aef5.s3tc.ctex", "res://.godot/imported/sala_papa_dark_wooden_planks_Rough_1k.png-b12e9b1b1f1e4f7666ee2e0343e6aef5.etc2.ctex"]
 
 [params]
 
