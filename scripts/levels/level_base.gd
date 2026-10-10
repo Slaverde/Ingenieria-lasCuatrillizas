@@ -24,6 +24,16 @@ const LIGHT_RANGE := 12.0              # alcance de velas y focos (el .glb no tr
 @export var extend_tile_nodes: PackedStringArray = []
 @export var extend_move_prefixes: PackedStringArray = []
 
+## Cajas de colision para muebles grandes y huecos (estanterias, bancos...). Cada entrada es un prefijo
+## (ej. "Estanteria_Caida_01_"): todas las mallas del .glb que empiecen asi se agrupan en UNA caja
+## solida que cubre el mueble completo, para que el jugador no pueda entrar entre sus tablas.
+@export var solid_box_prefixes: PackedStringArray = []
+
+## Corre de lugar piezas del .glb (ej. estatuas que estorban el paso). Las piezas `shift_prefixes`
+## se desplazan `shift_offset` metros (el Z positivo es hacia la camara en las salas laterales).
+@export var shift_prefixes: PackedStringArray = []
+@export var shift_offset := Vector3.ZERO
+
 ## Multiplicador extra para ajustar UN nivel: >1 mas luz, <1 mas oscuro.
 @export var light_energy_scale := 1.0
 ## Las sombras de muchas luces son pesadas: por defecto estan apagadas.
@@ -68,6 +78,25 @@ func find_env_node(node_name: String) -> Node3D:
 	return n
 
 
+## Rampa invisible a lo largo de Z (escaleras que se suben caminando "hacia el fondo", camara trasera).
+## from/to son (z, y); x es el centro de la rampa y width su ancho en X. Sube de `from` a `to`.
+func add_ramp_z(from: Vector2, to: Vector2, x: float, width: float, thickness: float = 0.2) -> void:
+	var body := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	var delta := to - from                      # (dz, dy)
+	box.size = Vector3(width, thickness, delta.length())
+	shape.shape = box
+	body.add_child(shape)
+	add_child(body)
+	# El eje largo (Z local) debe quedar paralelo a la pendiente: giro sobre X.
+	var angle := atan2(delta.y, -delta.x) if delta.x < 0.0 else atan2(-delta.y, delta.x)
+	var mid := (from + to) * 0.5
+	body.rotation.x = angle
+	# La normal "hacia arriba" del bloque girado sobre X es (0, cos a, sin a): se hunde medio grosor.
+	body.position = Vector3(x, mid.y - cos(angle) * thickness * 0.5, mid.x - sin(angle) * thickness * 0.5)
+
+
 ## Colision en forma de rampa (para escaleras: Godot no sube peldanos solo).
 ## from/to son (x, y) en el plano del nivel; z es la linea por la que camina el jugador.
 func add_ramp(from: Vector2, to: Vector2, z: float, width: float, thickness: float = 0.2) -> void:
@@ -95,6 +124,7 @@ func _prepare_environment() -> void:
 	for cam in env.find_children("*", "Camera3D", true, false):
 		cam.queue_free()
 	_extend_tunnel(env)
+	_shift_nodes(env)
 	for node in env.find_children("*", "Node3D", true, false):
 		if _starts_with_any(node.name, hide_prefixes):
 			node.visible = false
@@ -106,6 +136,7 @@ func _prepare_environment() -> void:
 			light.omni_range = LIGHT_RANGE
 		elif light is SpotLight3D:
 			light.spot_range = LIGHT_RANGE
+	_add_solid_boxes(env)
 	if collision_prefixes.is_empty():
 		return
 	for mesh in env.find_children("*", "MeshInstance3D", true, false):
@@ -130,6 +161,40 @@ func _extend_tunnel(env: Node) -> void:
 	for node in env.find_children("*", "Node3D", true, false):
 		if _starts_with_any(node.name, extend_move_prefixes) and not _chain_matches(node.get_parent(), env, extend_move_prefixes):
 			node.global_position.z += extend_back
+
+
+## Corre las piezas `shift_prefixes` (ver `shift_offset`). Solo mueve el nodo mas alto de cada grupo.
+func _shift_nodes(env: Node) -> void:
+	if shift_prefixes.is_empty() or shift_offset == Vector3.ZERO:
+		return
+	for node in env.find_children("*", "Node3D", true, false):
+		if _starts_with_any(node.name, shift_prefixes) and not _chain_matches(node.get_parent(), env, shift_prefixes):
+			node.global_position += shift_offset
+
+
+## Una caja solida por cada prefijo de `solid_box_prefixes` (cubre todas las mallas visibles del mueble).
+func _add_solid_boxes(env: Node) -> void:
+	for prefix in solid_box_prefixes:
+		var box_aabb := AABB()
+		var found := false
+		for mesh in env.find_children("*", "MeshInstance3D", true, false):
+			if not String(mesh.name).begins_with(prefix) or not mesh.is_visible_in_tree():
+				continue
+			var mesh_aabb: AABB = mesh.global_transform * mesh.get_aabb()
+			box_aabb = mesh_aabb if not found else box_aabb.merge(mesh_aabb)
+			found = true
+		if not found:
+			push_warning("%s: no hay mallas con el prefijo '%s' para la caja solida" % [level_id, prefix])
+			continue
+		var body := StaticBody3D.new()
+		body.name = "Solido_%s" % prefix.trim_suffix("_")
+		var shape := CollisionShape3D.new()
+		var box := BoxShape3D.new()
+		box.size = box_aabb.size
+		shape.shape = box
+		body.add_child(shape)
+		add_child(body)
+		body.global_position = box_aabb.get_center()
 
 
 func _starts_with_any(node_name: String, prefixes: PackedStringArray) -> bool:

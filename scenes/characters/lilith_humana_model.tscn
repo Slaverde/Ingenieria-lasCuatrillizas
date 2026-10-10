@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/character_model.gd" id="1_model"]
+[ext_resource type="PackedScene" path="res://assets/characters/lilith/lilith_humana.glb" id="2_glb"]
+
+[node name="LilithHumanaModel" type="Node3D"]
+script = ExtResource("1_model")
+
+[node name="Model" parent="." instance=ExtResource("2_glb")]
+transform = Transform3D(-0.6, 0, 0, 0, 0.6, 0, 0, 0, -0.6, 0, 0, 0)

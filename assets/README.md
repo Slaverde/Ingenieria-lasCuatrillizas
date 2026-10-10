@@ -28,3 +28,16 @@ Todo lo visual se modela en Blender y se exporta a **glTF 2.0 binario (`.glb`)**
 
 ## Como reemplazar el placeholder
 `scenes/player/player.tscn` -> nodo `ModelPivot/PlaceholderMesh`: borrarlo e instanciar el `.glb` de Malaes dentro de `ModelPivot`.
+
+## Estado de los personajes (modelos del compañero de Blender)
+Los modelos llegan como `.glb` con esqueleto, colores simples (sin texturas) y **sin animaciones** (T-pose). Miden ~1,7 m y **miran hacia +Z**.
+| Personaje | Archivo | En el juego |
+|---|---|---|
+| Malaes | `characters/malaes/malaes.glb` | Integrado: `scenes/characters/malaes_model.tscn` (escala 0,6 → ~1,04 m porque es un niño; girado 180° para mirar a -Z) |
+| Lilith humana | `characters/lilith/lilith_humana.glb` | Integrada (`lilith_humana_model.tscn`, escala 0,6 → niña pequeña como Malaes): pasillo (02) y galería (06) |
+| Monja | `characters/monja/monja.glb` | Integrada (`monja_model.tscn`, escala 1,0 ≈ 1,65 m): pasillo (02) |
+| Lilith monstruo (entidad catacumbas) | `characters/lilith/entidad_catacumbas.glb` | Integrada (`entidad_model.tscn`, escala 1,5 ≈ 2,6 m, «demasiado grande» según el guion): transformación (06), persecución (07), camino final (09) y sala del Papa (10) |
+| Papa | `characters/papa/papa.glb` | Integrado (`papa_model.tscn`, escala 1,0 ≈ 2,1 m con tiara): sala del Papa (10), sobre el estrado y mirando hacia +Z |
+
+`scripts/characters/character_model.gd` baja los brazos y los balancea al caminar por código, mientras no haya animaciones reales en los `.glb`.
+

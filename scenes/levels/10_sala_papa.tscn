@@ -1,10 +1,13 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/level_10_sala_papa.gd" id="lvl"]
 [ext_resource type="PackedScene" path="res://assets/environments/sala_papa/sala_papa.glb" id="env"]
 [ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
+[ext_resource type="Script" path="res://scripts/enemies/lilith_companion.gd" id="comp"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
 [ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
+[ext_resource type="PackedScene" path="res://scenes/characters/entidad_model.tscn" id="entidad_model"]
+[ext_resource type="PackedScene" path="res://scenes/characters/papa_model.tscn" id="papa_model"]
 
 [sub_resource type="Environment" id="s1"]
 background_mode = 1
@@ -14,21 +17,13 @@ ambient_light_color = Color(0.15, 0.14, 0.16, 1)
 ambient_light_energy = 0.25
 
 [sub_resource type="BoxShape3D" id="s2"]
-size = Vector3(15.0, 0.2, 44.5)
+size = Vector3(15.0, 0.2, 61.0)
 
 [sub_resource type="BoxShape3D" id="s3"]
-size = Vector3(0.5, 6, 45.5)
+size = Vector3(0.5, 12, 61.0)
 
 [sub_resource type="BoxShape3D" id="s4"]
 size = Vector3(15.0, 6, 0.5)
-
-[sub_resource type="CapsuleMesh" id="s5"]
-radius = 0.5
-height = 2.6
-
-[sub_resource type="CapsuleMesh" id="s6"]
-radius = 0.4
-height = 1.8
 
 [node name="Level" type="Node3D"]
 script = ExtResource("lvl")
@@ -41,7 +36,7 @@ environment = SubResource("s1")
 [node name="Environment" parent="." instance=ExtResource("env")]
 
 [node name="SafetyFloor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -21.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -29.0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SafetyFloor"]
 shape = SubResource("s2")
@@ -49,14 +44,14 @@ shape = SubResource("s2")
 [node name="Walls" type="Node3D" parent="."]
 
 [node name="Left" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.25, 3, -21.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.25, 6, -29.0)
 script = ExtResource("wall")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Left"]
 shape = SubResource("s3")
 
 [node name="Right" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.25, 3, -21.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.25, 6, -29.0)
 script = ExtResource("wall")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Right"]
@@ -70,7 +65,7 @@ script = ExtResource("wall")
 shape = SubResource("s4")
 
 [node name="Front" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -43.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -59.75)
 script = ExtResource("wall")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Front"]
@@ -81,13 +76,14 @@ shape = SubResource("s4")
 [node name="Default" type="Marker3D" parent="Spawns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.05, -2.0)
 
-[node name="LilithMonstruo" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0, 1.3, -2.2)
-mesh = SubResource("s5")
+[node name="LilithCompanion" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, 0, -2.0)
+script = ExtResource("comp")
 
-[node name="Papa" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3, -50.4)
-mesh = SubResource("s6")
+[node name="LilithModel" parent="LilithCompanion" instance=ExtResource("entidad_model")]
+
+[node name="Papa" parent="." instance=ExtResource("papa_model")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 2.4, -50.4)
 
 [node name="Player" parent="." instance=ExtResource("player")]
 

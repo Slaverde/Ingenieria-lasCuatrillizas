@@ -13,7 +13,15 @@ extends CharacterBody3D
 @export var turn_speed := 12.0
 @export var allow_backwards := true   # en el camino final no se puede retroceder
 
-var mode: StringName = &"side"
+## Solo en las salas de movimiento vertical (camara trasera): gira el modelo 180 grados respecto a su direccion
+## de movimiento. Las salas laterales no se tocan. Si queda al reves, ponerlo en false.
+@export var flip_in_behind_mode := true
+
+var mode: StringName = &"side":
+	set(value):
+		mode = value
+		if _pivot:
+			_pivot.rotation.y = _facing_offset()   # postura inicial: mirando hacia adelante (-Z)
 
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var _nearby: Array[Interactable] = []
@@ -22,6 +30,7 @@ var _shown_prompt := ""
 
 @onready var _pivot: Node3D = $ModelPivot
 @onready var _sensor: Area3D = $InteractionSensor
+@onready var _model: CharacterModel = get_node_or_null("ModelPivot/MalaesModel") as CharacterModel
 
 
 func _ready() -> void:
@@ -45,6 +54,8 @@ func _physics_process(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, dir.x * speed, acceleration * delta)
 	velocity.z = move_toward(velocity.z, dir.z * speed, acceleration * delta)
 	move_and_slide()
+	if _model:
+		_model.set_move_speed(Vector2(velocity.x, velocity.z).length())
 
 	_update_facing(dir, delta)
 	_update_interaction()
@@ -63,8 +74,12 @@ func _read_direction() -> Vector3:
 func _update_facing(dir: Vector3, delta: float) -> void:
 	if dir.length() < 0.1:
 		return
-	var target_yaw := atan2(-dir.x, -dir.z)
+	var target_yaw := atan2(-dir.x, -dir.z) + _facing_offset()
 	_pivot.rotation.y = lerp_angle(_pivot.rotation.y, target_yaw, clampf(turn_speed * delta, 0.0, 1.0))
+
+
+func _facing_offset() -> float:
+	return PI if (flip_in_behind_mode and mode == &"behind") else 0.0
 
 
 func _update_interaction() -> void:

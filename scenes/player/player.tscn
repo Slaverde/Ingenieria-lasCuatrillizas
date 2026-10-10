@@ -1,12 +1,9 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/characters/malaes_model.tscn" id="2_model"]
 
 [sub_resource type="CapsuleShape3D" id="shape_body"]
-radius = 0.3
-height = 1.0
-
-[sub_resource type="CapsuleMesh" id="mesh_placeholder"]
 radius = 0.3
 height = 1.0
 
@@ -24,9 +21,7 @@ shape = SubResource("shape_body")
 
 [node name="ModelPivot" type="Node3D" parent="."]
 
-[node name="PlaceholderMesh" type="MeshInstance3D" parent="ModelPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("mesh_placeholder")
+[node name="MalaesModel" parent="ModelPivot" instance=ExtResource("2_model")]
 
 [node name="InteractionSensor" type="Area3D" parent="."]
 collision_layer = 0

@@ -10,6 +10,8 @@ extends CharacterBody3D
 var _target: Node3D
 var active := false
 
+@onready var _model: CharacterModel = get_node_or_null("LilithModel") as CharacterModel
+
 
 func _ready() -> void:
 	collision_layer = 4
@@ -19,6 +21,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not active or _target == null:
+		if _model:
+			_model.set_move_speed(0.0)
 		return
 	var to_target := _target.global_position - global_position
 	to_target.y = 0.0
@@ -28,3 +32,5 @@ func _physics_process(delta: float) -> void:
 		return
 	velocity = to_target.normalized() * speed
 	move_and_slide()
+	if _model:
+		_model.set_move_speed(velocity.length())

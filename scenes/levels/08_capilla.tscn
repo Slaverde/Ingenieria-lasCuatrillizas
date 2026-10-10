@@ -80,7 +80,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 9.3)
 [node name="Nota" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 script = ExtResource("inter")
-prompt_text = "Recoger la nota"
+prompt_text = "Leer la carta"
 one_shot = true
 dialogue_id = "nota_samael"
 set_flag_on_interact = &"nota_leida"

@@ -18,7 +18,7 @@ El guion original tiene dos "Escenario 5"; aquí están renumerados en 10 nivele
 | `10_sala_papa` | Esc. 7 | `sala_papa` | **a la espalda** | Diálogos finales y "AHORA ERES EL PAPA" | Papa en fuego, corona, créditos |
 
 ## Flags de historia
-`carta_papa_leida`, `vio_a_lilith`, `escucho_conversacion`, `castigo_completado`, `carta_latin_guardada`, `rezo_en_altar`,
+`carta_papa_leida`, `vio_a_lilith`, `escucho_conversacion`, `castigo_completado`, `carta_latin_guardada`, `rezo_en_altar`, `entendio_latin`, `puerta_carta_lista`,
 `vio_puerta_3_diablos`, `carta_descifrada`, `encuentro_lilith_terminado`, `persecucion_superada`, `nota_leida`, `fin_del_juego`.
 
 ## Convenciones del código para los escenarios
@@ -48,4 +48,6 @@ Crear `data/dialogues/<id>.json` y ponerle `dialogue_id = "<id>"` a un `Interact
 - Cartas: una línea de diálogo con `"style": "letter"` (ver `carta_papa_llama.json`) se muestra centrada, grande y a pantalla completa, en vez de la caja de abajo. Sirve también para las demás cartas y notas.
 - Cuarto invertido (`03`): luz rojiza (constantes `RED_LIGHT`, `RED_AMBIENT`, `TINT_AMOUNT` en `level_03_cuarto_invertido.gd`) y diálogo `cruz_invertida.json`, una sola vez (flag `comento_cruz`).
 - Túneles de cámara trasera (05, 07, 09): `extend_back` alarga el túnel 8 m hacia atrás repitiendo la malla del túnel y del piso (`extend_tile_nodes`) y moviendo la pared/puerta del inicio (`extend_move_prefixes`). El jugador no puede retroceder: lo frena un muro invisible en la **capa física 5** («bloqueo_jugador»), que la cámara ignora para poder ver el túnel detrás del jugador.
+- Catacumbas (`05`): rezar en el altar lanza 5 s de luces rojas intermitentes con la frase en latín (`rezar_altar.json`, línea con `"auto": 5`), luego hablan los pensamientos de Malaes (`rezar_protagonista.json`). Al llegar a la puerta salta `puerta_espera.json`, aparece «Sacar la carta» y con [E] sale la carta traducida (`carta_latin_legible.json`); solo después la puerta se abre con [E].
+- Diálogos con `"auto": N`: avanzan solos a los N segundos y no se pueden saltar con E (Tab sí).
 

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/character_model.gd" id="1_model"]
+[ext_resource type="PackedScene" path="res://assets/characters/lilith/entidad_catacumbas.glb" id="2_glb"]
+
+[node name="EntidadModel" type="Node3D"]
+script = ExtResource("1_model")
+arm_drop_deg = 80.0
+arm_swing_deg = 10.0
+bob_height = 0.05
+
+[node name="Model" parent="." instance=ExtResource("2_glb")]
+transform = Transform3D(-1.5, 0, 0, 0, 1.5, 0, 0, 0, -1.5, 0, 0, 0)

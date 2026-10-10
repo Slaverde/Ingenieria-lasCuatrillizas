@@ -16,6 +16,7 @@ const NUN_END_X := 36.0           # al llegar aqui sale de escena (la pared dere
 @onready var _monja: Monja = $Monja
 @onready var _sangre: BloodPool = $Sangre
 @onready var _lilith: Interactable = $Lilith
+@onready var _lilith_model: CharacterModel = $Lilith/LilithModel
 @onready var _escuchar: Interactable = $EscucharPuerta
 
 var _escena_iniciada := false
@@ -35,9 +36,11 @@ func _on_lilith_hablada(_player: Node3D) -> void:
 	await EventBus.dialogue_finished
 	await get_tree().create_timer(0.3).timeout
 	var distance := absf(_lilith.global_position.x - LILITH_EXIT_X)
+	_lilith_model.set_move_speed(LILITH_RUN_SPEED)
 	var tween := create_tween()
 	tween.tween_property(_lilith, "global_position:x", LILITH_EXIT_X, distance / LILITH_RUN_SPEED)
 	await tween.finished
+	_lilith_model.set_move_speed(0.0)
 	_lilith.visible = false
 
 

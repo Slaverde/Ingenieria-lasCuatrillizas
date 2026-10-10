@@ -4,6 +4,7 @@ extends RefCounted
 ## Formato: [ {"speaker": "Malaes", "text": "...", "portrait": "res://assets/ui/portraits/x.png"}, ... ]
 ## "speaker" y "portrait" son opcionales (sin speaker = pensamiento / narracion).
 ## "style": "letter" muestra la linea como una carta: centrada, grande y a pantalla completa.
+## "auto": N avanza la linea sola a los N segundos; "free_walk": true en la primera linea deja caminar al jugador mientras habla.
 ## En cartas largas se pueden dar "font_size" (por defecto 52) y "width" (ancho en px, por defecto 760).
 
 static func load_lines(id: String) -> Array:

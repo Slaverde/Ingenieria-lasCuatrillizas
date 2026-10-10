@@ -34,6 +34,7 @@ extend_back = 8.0
 extend_tile_nodes = PackedStringArray("Tunel_Roca", "Piso_Baldosas")
 extend_move_prefixes = PackedStringArray("Entrada_")
 collision_prefixes = PackedStringArray("Altar_Bloque", "Altar_Cruz", "Altar_Mesa")
+solid_box_prefixes = PackedStringArray("Estante_")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("s1")
@@ -97,7 +98,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, -19.6)
 script = ExtResource("inter")
 prompt_text = "Rezar"
 one_shot = true
-dialogue_id = "rezar_altar"
 set_flag_on_interact = &"rezo_en_altar"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Altar"]
