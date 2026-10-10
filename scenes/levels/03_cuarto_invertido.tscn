@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/level_03_cuarto_invertido.gd" id="lvl"]
+[ext_resource type="PackedScene" path="res://assets/environments/cuarto/cuarto.glb" id="env"]
+[ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
+[ext_resource type="Script" path="res://scripts/levels/scene_exit.gd" id="exit"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
+
+[sub_resource type="Environment" id="s1"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.14, 0.16, 1)
+ambient_light_energy = 0.25
+
+[sub_resource type="BoxShape3D" id="s2"]
+size = Vector3(7.2, 0.2, 4)
+
+[sub_resource type="BoxShape3D" id="s3"]
+size = Vector3(0.5, 6, 4)
+
+[sub_resource type="BoxShape3D" id="s4"]
+size = Vector3(1, 3, 4)
+
+[node name="Level" type="Node3D"]
+script = ExtResource("lvl")
+level_id = &"03_cuarto_invertido"
+camera_mode = "side"
+hide_prefixes = PackedStringArray("Puerta", "Carta")
+lights_cast_shadows = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("s1")
+
+[node name="Environment" parent="." instance=ExtResource("env")]
+
+[node name="SafetyFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999999999996, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SafetyFloor"]
+shape = SubResource("s2")
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Left" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2, 3, 0)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Left"]
+shape = SubResource("s3")
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Default" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.05, 0)
+
+[node name="FromRight" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0.05, 0)
+
+[node name="ExitForward" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7, 1.5, 0)
+script = ExtResource("exit")
+target_level = &"04_pasillo_noche2"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitForward"]
+shape = SubResource("s4")
+
+[node name="Player" parent="." instance=ExtResource("player")]
+
+[node name="CameraRig" parent="." instance=ExtResource("rig")]
+min_x = 0.0
+max_x = 0.0

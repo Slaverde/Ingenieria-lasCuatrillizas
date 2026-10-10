@@ -1,0 +1,116 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/level_05_catacumbas.gd" id="lvl"]
+[ext_resource type="PackedScene" path="res://assets/environments/catacumbas/catacumbas.glb" id="env"]
+[ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="inter"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
+
+[sub_resource type="Environment" id="s1"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.14, 0.16, 1)
+ambient_light_energy = 0.25
+
+[sub_resource type="BoxShape3D" id="s2"]
+size = Vector3(4.6, 0.2, 40.8)
+
+[sub_resource type="BoxShape3D" id="s3"]
+size = Vector3(0.5, 6, 41.8)
+
+[sub_resource type="BoxShape3D" id="s4"]
+size = Vector3(4.6, 6, 0.5)
+
+[sub_resource type="BoxShape3D" id="s5"]
+size = Vector3(1.2, 1.5, 1.2)
+
+[node name="Level" type="Node3D"]
+script = ExtResource("lvl")
+level_id = &"05_catacumbas"
+camera_mode = "behind"
+extend_back = 8.0
+extend_tile_nodes = PackedStringArray("Tunel_Roca", "Piso_Baldosas")
+extend_move_prefixes = PackedStringArray("Entrada_")
+collision_prefixes = PackedStringArray("Altar_Bloque", "Altar_Cruz", "Altar_Mesa")
+solid_box_prefixes = PackedStringArray("Estante_")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("s1")
+
+[node name="Environment" parent="." instance=ExtResource("env")]
+
+[node name="SafetyFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -19.0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SafetyFloor"]
+shape = SubResource("s2")
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Left" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.05, 3, -19.0)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Left"]
+shape = SubResource("s3")
+
+[node name="Right" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05, 3, -19.0)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Right"]
+shape = SubResource("s3")
+
+[node name="Back" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.3)
+collision_layer = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Back"]
+shape = SubResource("s4")
+
+[node name="Front" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -39.65)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Front"]
+shape = SubResource("s4")
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Default" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -1.2)
+
+[node name="Biblioteca" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -8.5)
+script = ExtResource("inter")
+prompt_text = "Revisar los libros"
+one_shot = true
+dialogue_id = "carta_latin_hallada"
+set_flag_on_interact = &"carta_latin_guardada"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Biblioteca"]
+shape = SubResource("s5")
+
+[node name="Altar" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, -19.6)
+script = ExtResource("inter")
+prompt_text = "Rezar"
+one_shot = true
+set_flag_on_interact = &"rezo_en_altar"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Altar"]
+shape = SubResource("s5")
+
+[node name="PuertaTresDiablos" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, -38.4)
+script = ExtResource("inter")
+prompt_text = "Examinar la puerta"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PuertaTresDiablos"]
+shape = SubResource("s5")
+
+[node name="Player" parent="." instance=ExtResource("player")]
+
+[node name="CameraRig" parent="." instance=ExtResource("rig")]

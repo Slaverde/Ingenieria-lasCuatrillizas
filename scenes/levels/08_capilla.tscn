@@ -1,0 +1,93 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/level_08_capilla.gd" id="lvl"]
+[ext_resource type="PackedScene" path="res://assets/environments/capilla/capilla.glb" id="env"]
+[ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="inter"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
+
+[sub_resource type="Environment" id="s1"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.14, 0.16, 1)
+ambient_light_energy = 0.25
+
+[sub_resource type="BoxShape3D" id="s2"]
+size = Vector3(4.0, 0.2, 15.4)
+
+[sub_resource type="BoxShape3D" id="s3"]
+size = Vector3(0.5, 6, 16.4)
+
+[sub_resource type="BoxShape3D" id="s4"]
+size = Vector3(4.0, 6, 0.5)
+
+[sub_resource type="BoxShape3D" id="s5"]
+size = Vector3(1.2, 1.5, 1.2)
+
+[node name="Level" type="Node3D"]
+script = ExtResource("lvl")
+level_id = &"08_capilla"
+camera_mode = "behind"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("s1")
+
+[node name="Environment" parent="." instance=ExtResource("env")]
+
+[node name="SafetyFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 2.9)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SafetyFloor"]
+shape = SubResource("s2")
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Left" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 3, 2.9)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Left"]
+shape = SubResource("s3")
+
+[node name="Right" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75, 3, 2.9)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Right"]
+shape = SubResource("s3")
+
+[node name="Back" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 10.85)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Back"]
+shape = SubResource("s4")
+
+[node name="Front" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -5.05)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Front"]
+shape = SubResource("s4")
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Default" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 9.3)
+
+[node name="Nota" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+script = ExtResource("inter")
+prompt_text = "Leer la carta"
+one_shot = true
+dialogue_id = "nota_samael"
+set_flag_on_interact = &"nota_leida"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nota"]
+shape = SubResource("s5")
+
+[node name="Player" parent="." instance=ExtResource("player")]
+
+[node name="CameraRig" parent="." instance=ExtResource("rig")]

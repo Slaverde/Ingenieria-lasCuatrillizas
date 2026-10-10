@@ -1,0 +1,128 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/level_07_persecucion.gd" id="lvl"]
+[ext_resource type="PackedScene" path="res://assets/environments/persecucion/persecucion.glb" id="env"]
+[ext_resource type="Script" path="res://scripts/levels/invisible_wall.gd" id="wall"]
+[ext_resource type="Script" path="res://scripts/levels/scene_exit.gd" id="exit"]
+[ext_resource type="Script" path="res://scripts/enemies/lilith_chaser.gd" id="chaser"]
+[ext_resource type="Script" path="res://scripts/minigames/hide_qte.gd" id="qte"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="rig"]
+[ext_resource type="PackedScene" path="res://scenes/characters/entidad_model.tscn" id="entidad_model"]
+
+[sub_resource type="Environment" id="s1"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.14, 0.16, 1)
+ambient_light_energy = 0.25
+
+[sub_resource type="BoxShape3D" id="s2"]
+size = Vector3(5.6, 0.2, 67.0)
+
+[sub_resource type="BoxShape3D" id="s3"]
+size = Vector3(0.5, 6, 68.0)
+
+[sub_resource type="BoxShape3D" id="s4"]
+size = Vector3(5.6, 6, 0.5)
+
+[sub_resource type="BoxShape3D" id="s5"]
+size = Vector3(6, 3, 12)
+
+[sub_resource type="CapsuleShape3D" id="s6"]
+radius = 0.5
+height = 2.6
+
+[sub_resource type="BoxShape3D" id="s8"]
+size = Vector3(6, 3, 10)
+
+[node name="Level" type="Node3D"]
+script = ExtResource("lvl")
+level_id = &"07_persecucion"
+camera_mode = "behind"
+extend_back = 8.0
+extend_tile_nodes = PackedStringArray("Persecucion_Tunel", "Persecucion_Piso")
+extend_move_prefixes = PackedStringArray("Persecucion_Muro_Inicio")
+collision_prefixes = PackedStringArray("Estatua_", "Escombros_", "Pilar_Roto")
+solid_box_prefixes = PackedStringArray("Estanteria_Caida_01_", "Estanteria_Caida_10_", "Estanteria_Caida_11_", "Estanteria_Inclinada_04_", "Estanteria_Pie_08_", "Estanteria_Pie_15_")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("s1")
+
+[node name="Environment" parent="." instance=ExtResource("env")]
+
+[node name="SafetyFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -31.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SafetyFloor"]
+shape = SubResource("s2")
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Left" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.55, 3, -31.5)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Left"]
+shape = SubResource("s3")
+
+[node name="Right" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55, 3, -31.5)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Right"]
+shape = SubResource("s3")
+
+[node name="Back" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.3)
+collision_layer = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Back"]
+shape = SubResource("s4")
+
+[node name="Front" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -65.25)
+script = ExtResource("wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Front"]
+shape = SubResource("s4")
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Default" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -1.5)
+
+[node name="ExitForward" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -59.5)
+script = ExtResource("exit")
+target_level = &"08_capilla"
+required_flag = &"persecucion_superada"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitForward"]
+shape = SubResource("s5")
+
+[node name="LilithChaser" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 2.5)
+script = ExtResource("chaser")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LilithChaser"]
+shape = SubResource("s6")
+
+[node name="LilithModel" parent="LilithChaser" instance=ExtResource("entidad_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3, 0)
+
+[node name="HideQTE" type="Node" parent="."]
+script = ExtResource("qte")
+time_limit = 4.0
+
+[node name="QteZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -49.5)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="QteZone"]
+shape = SubResource("s8")
+
+[node name="Player" parent="." instance=ExtResource("player")]
+
+[node name="CameraRig" parent="." instance=ExtResource("rig")]
